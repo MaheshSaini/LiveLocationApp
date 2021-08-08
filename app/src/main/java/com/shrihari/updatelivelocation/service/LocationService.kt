@@ -1,4 +1,4 @@
-package com.shrihari.updatelivelocation
+package com.shrihari.updatelivelocation.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,12 +9,12 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.shrihari.updatelivelocation.LocationHelper
+import com.shrihari.updatelivelocation.MyLocationListener
 import com.shrihari.updatelivelocation.R
-import java.util.*
 
 class LocationService : Service() {
     private val NOTIFICATION_CHANNEL_ID = "my_notification_location"
-    private val TAG = "LocationService"
     override fun onCreate() {
         super.onCreate()
         isServiceStarted = true
@@ -37,23 +37,21 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val timer = Timer()
         LocationHelper().startListeningUserLocation(
             this, object : MyLocationListener {
                 override fun onLocationChanged(location: Location?) {
                     mLocation = location
-
                     Log.d(
                         "MY LOCATION:",
-                        "onLocationChanged: MY Accuracy: " + mLocation?.accuracy
+                        "onLocationChanged: MY Accuracy: " + location?.accuracy
                     )
                     Log.d(
                         "MY LOCATION:",
-                        "onLocationChanged:MY Latitude: " + mLocation?.latitude
+                        "onLocationChanged:MY Latitude: " + location?.latitude
                     )
                     Log.d(
                         "MY LOCATION:",
-                        "onLocationChanged:MY Longitude: " + mLocation?.longitude
+                        "onLocationChanged:MY Longitude: " + location?.longitude
                     )
                 }
             })

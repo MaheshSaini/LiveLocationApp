@@ -1,4 +1,4 @@
-package com.shrihari.updatelivelocation
+package com.shrihari.updatelivelocation.service
 
 import android.content.BroadcastReceiver
 import android.content.Context
